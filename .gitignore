@@ -21,3 +21,5 @@ build/
 *.sql
 *.dump
 /src/generated/prisma
+
+!prisma/migrations/**/migration.sql
