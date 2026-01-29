@@ -51,4 +51,17 @@ export const loginUser = async (email: string, password: string) => {
     };
 };
 
+export const getCurrentUser = async (userId: string) => {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
 
+    if (!user) {
+        throw new Error('USER_NOT_FOUND');
+    }
+
+    return {
+        id: user.id,
+        email: user.email,
+    };
+};

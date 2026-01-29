@@ -1,17 +1,22 @@
 import express, { Request, Response } from 'express';
 import 'dotenv/config';
 import { disconnectDb } from './lib/prisma';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 
+app.use(express.json());
+
 const PORT = process.env.PORT || 3000;
 
-const server = app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-})
+app.use('/api/auth', authRoutes);
 
-app.get("/health", (req: Request, res: Response) => {
-    res.status(200).json({ status: "ok" });
+app.get('/health', (req: Request, res: Response) => {
+    res.status(200).json({ status: 'ok' });
+});
+
+const server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 process.on("uncaughtException", async (error) => {
